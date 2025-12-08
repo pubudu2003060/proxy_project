@@ -1,7 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"log"
+
+	"github.com/pubudu2003060/proxy_project/internal/config"
+)
 
 func main() {
-	fmt.Println("run")
+	envConfig := config.NewEnvConfig()
+	log.Println("server run in port:", envConfig.Port)
 }
