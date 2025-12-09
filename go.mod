@@ -3,3 +3,8 @@ module github.com/pubudu2003060/proxy_project
 go 1.25.3
 
 require github.com/joho/godotenv v1.5.1
+
+require (
+	github.com/go-chi/chi v1.5.5 // indirect
+	github.com/go-chi/cors v1.2.2 // indirect
+)
