@@ -13,12 +13,12 @@ services:
   #restart: unless-stopped
   postgres_dev:
     image: postgres:15
-    container_name: subnetwork_system_database_dev
+    container_name: proxy_project_database_dev
     restart: always
     environment:
       POSTGRES_USER: myuser
       POSTGRES_PASSWORD: mypassword
-      POSTGRES_DB: subnetwork_system_database
+      POSTGRES_DB: proxy_project_database
     ports:
       - "5432:5432"
     volumes:

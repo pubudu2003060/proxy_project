@@ -9,14 +9,23 @@ import (
 	"time"
 
 	"github.com/pubudu2003060/proxy_project/internal/config"
+	"github.com/pubudu2003060/proxy_project/internal/db"
 	"github.com/pubudu2003060/proxy_project/internal/server"
+
+	_ "github.com/lib/pq"
 )
 
 func main() {
 	envConfig := config.NewEnvConfig()
 	log.Println("server run in port:", envConfig.Port)
 
-	router := server.NewRouter()
+	db, err := db.Connect(envConfig.DBURL)
+	if err != nil {
+		log.Fatal("database connection error:", err)
+	}
+	defer db.Close()
+
+	router := server.NewRouter(db)
 
 	srv := &http.Server{
 		Addr:         ":" + envConfig.Port,

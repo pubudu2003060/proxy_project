@@ -1,6 +1,7 @@
 package server
 
 import (
+	"database/sql"
 	"net/http"
 	"time"
 
@@ -9,7 +10,7 @@ import (
 	"github.com/go-chi/cors"
 )
 
-func NewRouter() http.Handler {
+func NewRouter(db *sql.DB) http.Handler {
 	router := chi.NewRouter()
 
 	router.Use(middleware.RequestID)
