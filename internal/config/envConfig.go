@@ -9,8 +9,9 @@ import (
 )
 
 type EnvConfig struct {
-	Port  string
-	DBURL string
+	Port       string
+	DBURL      string
+	UserApiKey string
 }
 
 func NewEnvConfig() EnvConfig {
@@ -26,8 +27,9 @@ func NewEnvConfig() EnvConfig {
 	}
 
 	config := EnvConfig{
-		Port:  getEnv("PORT", "8080"),
-		DBURL: getEnv("DB_URL", ""),
+		Port:       getEnv("PORT", "8080"),
+		DBURL:      getEnv("DB_URL", ""),
+		UserApiKey: getEnv("USER_API_KEY", ""),
 	}
 
 	config.validate()
@@ -49,6 +51,11 @@ func (e *EnvConfig) validate() {
 	if e.DBURL == "" {
 		isErr = true
 		message += "Empty database URL, "
+	}
+
+	if e.UserApiKey == "" {
+		isErr = true
+		message += "Empty user API key, "
 	}
 
 	if isErr {

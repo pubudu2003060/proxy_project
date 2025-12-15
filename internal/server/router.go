@@ -8,6 +8,9 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
+	"github.com/pubudu2003060/proxy_project/internal/db/repository"
+	handlers "github.com/pubudu2003060/proxy_project/internal/server/handlers"
+	service "github.com/pubudu2003060/proxy_project/internal/server/service"
 )
 
 func NewRouter(db *sql.DB) http.Handler {
@@ -26,6 +29,15 @@ func NewRouter(db *sql.DB) http.Handler {
 		AllowCredentials: false,
 		MaxAge:           300,
 	}))
+
+	q := repository.New(db)
+
+	userService := service.NewUserService(q, db)
+	userHandler := handlers.NewUserHandler(userService)
+
+	router.Route("/api", func(r chi.Router) {
+		r.Mount("/user", userHandler.Routes())
+	})
 
 	return router
 
